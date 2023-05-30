@@ -1,0 +1,1 @@
+export { PermissionTypeTableLayout } from './TableLayout'
