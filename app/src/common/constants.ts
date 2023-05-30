@@ -1,8 +1,8 @@
 import { ApiProps } from "./interfaces"
 
 export const ENVIRONMENTS: ApiProps = {
-  local: 'https://localhost:7189',
-  dev: 'https://localhost:7189', 
+  local: 'https://localhost:5001',
+  dev: 'https://localhost:5001', 
   prod: 'http://localhost:9999',
 }
 
