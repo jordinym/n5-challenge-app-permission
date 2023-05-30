@@ -1,10 +1,11 @@
-import { useMutation } from "react-query"
+import { useMutation, useQuery } from "react-query"
 
 import { CreatePermissionDialogProps, PermissionDialogAlert, PermissionDialogFormViewValues } from "./props";
 import { postSavePermissionApiCall, putUpdatePermissionApiCall } from "src/services/permission/permission-api";
-import { CreatePermissionCommandRequest, UpdatePermissionCommandRequest } from "src/services/permission/models";
+import { CreatePermissionCommandRequest, PermissionTypesQueryResponse, UpdatePermissionCommandRequest } from "src/services/permission/models";
 import { useForm } from "react-hook-form";
 import { useState } from "react";
+import { getPermissionTypesApiCall } from "src/services";
 
 
 export const useCreatePermissionCommandHooks = (props: CreatePermissionDialogProps) => {
@@ -19,6 +20,25 @@ export const useCreatePermissionCommandHooks = (props: CreatePermissionDialogPro
       }
     }
   );
+
+  const permissionsValue: PermissionTypesQueryResponse[] = []; 
+  const [permissionTypes, setPermissionTypes] = useState([...permissionsValue]);
+
+  const { isFetching, error, refetch } = useQuery(
+    'get-permission-type-query-by-select',
+    () => getPermissionTypesApiCall(),
+    {
+      retry: 0,
+      refetchOnWindowFocus: true,
+      onSuccess: data => handleSuccess(data)
+    }
+  )
+
+  const handleSuccess = (data: PermissionTypesQueryResponse[]) => {
+    setPermissionTypes(data)
+  }
+
+  
   const [showAlert, setShowAlert] = useState<PermissionDialogAlert>(
     {
       message: '',
@@ -107,6 +127,7 @@ export const useCreatePermissionCommandHooks = (props: CreatePermissionDialogPro
     errors,
     showAlert,
     handleChange,
-    permissionType
+    permissionType,
+    permissionTypes
   }
 }

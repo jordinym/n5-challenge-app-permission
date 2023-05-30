@@ -1,10 +1,11 @@
 import { useQuery } from "react-query"
 import { getPermissionsApiCall } from "src/services"
 import { PermissionsQueryResponse } from "src/services/permission/models/permissions-query-response";
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import { PermissionDetailsProps } from "./props";
 
-export const usePermissionQueryHooks = () => {
-
+export const usePermissionQueryHooks = (props: PermissionDetailsProps) => {
+  const { open: openCreateDialog } = props;
   const permissionsValue: PermissionsQueryResponse[] = [];
   const [intervalMs, setIntervalMs] = useState(1000)
   const [permissions, setPermissions] = useState([...permissionsValue]);
@@ -20,6 +21,10 @@ export const usePermissionQueryHooks = () => {
       onSuccess: data => handleSuccess(data)
     }
   )
+
+  useEffect(() => {
+    refetch();
+  }, [openCreateDialog]);
 
   const handleSuccess = (data: PermissionsQueryResponse[]) => {
 

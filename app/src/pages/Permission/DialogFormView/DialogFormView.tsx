@@ -12,21 +12,10 @@ export const CreatePermissionDialog: React.FC<CreatePermissionDialogProps> = (pr
     errors,
     showAlert,
     handleChange,
-    permissionType } = useCreatePermissionCommandHooks(props)
-  
-  const label = { inputProps: { 'aria-label': 'Switch demo' } };
-
-  const currencies = [
-    {
-      value: '1',
-      label: 'Administrator'
-    },
-    {
-      value: '2',
-      label: 'Vendor'
-    },
-  ]; 
-
+    permissionType,
+    permissionTypes
+   } = useCreatePermissionCommandHooks(props)
+   
   return (
     <Dialog onClose={handleClose} open={props.open}>
       <DialogTitle>Register Permission</DialogTitle>
@@ -70,9 +59,9 @@ export const CreatePermissionDialog: React.FC<CreatePermissionDialogProps> = (pr
                     onChange={handleChange} 
                     value={permissionType}
                   >
-                    {currencies.map((option) => (
-                      <MenuItem key={option.value} value={option.value}>
-                        {option.label}
+                    {permissionTypes.map((option) => (
+                      <MenuItem key={option.id} value={option.id}>
+                        {option.description}
                       </MenuItem>
                     ))}
                   </TextField>

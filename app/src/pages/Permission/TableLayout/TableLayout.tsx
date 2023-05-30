@@ -14,7 +14,8 @@ import { usePermissionQueryHooks } from "./hooks";
 import TablePaginationActions from "@mui/material/TablePagination/TablePaginationActions";
 import BorderColorIcon from '@mui/icons-material/BorderColor';
 import { CreatePermissionDialog } from "../DialogFormView/DialogFormView";
-export const PermissionTableLayout: React.FC = () => {
+import { PermissionDetailsProps } from "./props";
+export const PermissionTableLayout: React.FC<PermissionDetailsProps> = (props) => {
   const {
     permissions,
     handleChangePage,
@@ -26,7 +27,7 @@ export const PermissionTableLayout: React.FC = () => {
     open,
     handleClickOpen,
     permission
-  } = usePermissionQueryHooks()
+  } = usePermissionQueryHooks(props)
 
   return (
     <>

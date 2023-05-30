@@ -3,3 +3,7 @@ import { PermissionsQueryResponse } from "src/services/permission/models/permiss
  export interface PermissionTableProps  {
     permissions: PermissionsQueryResponse[]; 
   };
+
+  export interface PermissionDetailsProps {
+    open:boolean,
+  };

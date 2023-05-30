@@ -43,6 +43,7 @@ const ConsultPermission: React.FC = () => {
               isEditPermission={false}
             />)}
             <PermissionTableLayout
+            open={open}
             />
           </CardContent>
         </Card>
