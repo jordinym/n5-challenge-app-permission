@@ -1,31 +1,73 @@
 import { useQuery } from "react-query"
-import { PermissionTableProps } from "./props"
 import { getPermissionsApiCall } from "src/services"
 import { PermissionsQueryResponse } from "src/services/permission/models/permissions-query-response";
 import { useState } from "react";
 
 export const usePermissionQueryHooks = () => {
 
-  const permissionsValue:PermissionsQueryResponse[]=[]; 
+  const permissionsValue: PermissionsQueryResponse[] = [];
   const [intervalMs, setIntervalMs] = useState(1000)
-  const [permissions, setPermission] = useState([...permissionsValue]);
+  const [permissions, setPermissions] = useState([...permissionsValue]);
+  const [open, setOpen] = useState(false);
+  const [permission, setPermission] = useState<PermissionsQueryResponse>();
 
-  const { isFetching, error, refetch} = useQuery(
+  const { isFetching, error, refetch } = useQuery(
     'get-permission-query',
     () => getPermissionsApiCall(),
     {
       retry: 0,
-      refetchOnWindowFocus: false, 
-      onSuccess: data => setPermission(data)
+      refetchOnWindowFocus: true,
+      onSuccess: data => handleSuccess(data)
     }
   )
-   
-    const getPermissions= ():PermissionsQueryResponse[] =>{
-  
-      return permissions;
-    } 
-    return {
-        getPermissions,
-        permissions 
-      }
+
+  const handleSuccess = (data: PermissionsQueryResponse[]) => {
+
+    setPermissions(data)
+  }
+
+  const [page, setPage] = useState(0);
+  const [rowsPerPage, setRowsPerPage] = useState(5);
+
+  const handleChangePage = (
+    event: React.MouseEvent<HTMLButtonElement> | null,
+    newPage: number,
+  ) => {
+    setPage(newPage);
+  };
+
+  const handleChangeRowsPerPage = (
+    event: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  ) => {
+    setRowsPerPage(parseInt(event.target.value, 10));
+    setPage(0);
+  };
+
+
+  const emptyRows =
+    page > 0 ? Math.max(0, (1 + page) * rowsPerPage - permissions.length) : 0;
+
+  const handleClickOpen = (permission: PermissionsQueryResponse) => {
+    setPermission(permission)
+    setOpen(true);
+  };
+
+  const handleClose = () => {
+    refetch();
+    setOpen(false);
+  };
+
+
+  return {
+    permissions,
+    handleChangePage,
+    handleChangeRowsPerPage,
+    rowsPerPage,
+    page,
+    emptyRows,
+    handleClickOpen,
+    handleClose,
+    open,
+    permission
+  }
 }

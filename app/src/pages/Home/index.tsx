@@ -14,6 +14,7 @@ function Home() {
         <PageTitle
           heading=" Home - Permission App"
           subHeading="N5Now Challenge - fullstack developer."
+          addButton={false}
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">

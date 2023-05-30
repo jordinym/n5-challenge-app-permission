@@ -8,8 +8,7 @@ export const usePermissionHooks = () => {
         setOpen(true);
     };
 
-    const handleClose = () => {
-        console.log("jordiny")
+    const handleClose = () => { 
         setOpen(false);
     };
 

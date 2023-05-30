@@ -3,7 +3,7 @@ import { PermissionTableLayout } from './TableLayout'
 import { Helmet } from 'react-helmet-async';
 import PageTitleWrapper from 'src/components/PageTitleWrapper';
 import PageTitle from 'src/components/PageTitle';
-import Footer from 'src/components/Footer'; 
+import Footer from 'src/components/Footer';
 
 import {
   Container,
@@ -11,14 +11,14 @@ import {
   CardHeader,
   CardContent,
   Divider
-} from '@mui/material'; 
+} from '@mui/material';
 import { usePermissionHooks } from './hooks';
-import { CreatePermissionDialog } from './FormView/FormView';
+import { CreatePermissionDialog } from './DialogFormView/DialogFormView';
 
 
 
 const ConsultPermission: React.FC = () => {
-  const {handleClickOpen,handleClose,open} = usePermissionHooks()
+  const { handleClickOpen, handleClose, open } = usePermissionHooks()
   return (
     <>
       <Helmet>
@@ -29,6 +29,7 @@ const ConsultPermission: React.FC = () => {
           heading="Permissions"
           subHeading="Lists information"
           handleClick={handleClickOpen}
+          addButton={true}
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
@@ -36,11 +37,13 @@ const ConsultPermission: React.FC = () => {
           <CardHeader title="Search Results" />
           <Divider />
           <CardContent>
-            <CreatePermissionDialog 
-            open={open}
-            onClose={handleClose}
+            {open && (<CreatePermissionDialog
+              open={open}
+              onClose={handleClose}
+              isEditPermission={false}
+            />)}
+            <PermissionTableLayout
             />
-            <PermissionTableLayout />
           </CardContent>
         </Card>
       </Container>

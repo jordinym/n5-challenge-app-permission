@@ -2,5 +2,7 @@ export interface PermissionsQueryResponse {
     id: number
     employeeForename: string
     employeeSurname: string
-    permisionTypeId: number
+    permissionTypeId: number
+    permissionType: string
+    registrationDate: string
   }

@@ -7,6 +7,7 @@ interface PageTitleProps {
   heading?: string;
   subHeading?: string;
   docs?: string;
+  addButton: boolean;
   handleClick?: () => void
 }
 
@@ -14,6 +15,7 @@ const PageTitle: FC<PageTitleProps> = ({
   heading = '',
   subHeading = '',
   docs = '',
+  addButton = false,
   handleClick,
   ...rest
 }) => {
@@ -31,18 +33,21 @@ const PageTitle: FC<PageTitleProps> = ({
         <Typography variant="subtitle2">{subHeading}</Typography>
       </Grid>
       <Grid item>
-        <Button
-          href={docs}
-          target="_blank"
-          rel="noopener noreferrer"
-          sx={{ mt: { xs: 2, md: 0 } }}
-          variant="contained"
-          onClick={handleClick}
-          startIcon={<AddTwoToneIcon fontSize="small" />}
-        >
+        {addButton && (
+ <Button
+ href={docs}
+ target="_blank"
+ rel="noopener noreferrer"
+ sx={{ mt: { xs: 2, md: 0 } }}
+ variant="contained"
+ onClick={handleClick}
+ startIcon={<AddTwoToneIcon fontSize="small" />}
+>
 
-          Add {heading}
-        </Button>
+ Add {heading}
+</Button>
+        )}
+       
       </Grid>
     </Grid>
   );

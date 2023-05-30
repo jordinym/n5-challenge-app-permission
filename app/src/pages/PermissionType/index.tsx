@@ -13,6 +13,7 @@ const ConsultPermissionType: React.FC = () => {
         <PageTitle
           heading="Permission Type"
           subHeading="List information"
+          addButton={true}
         />
       </PageTitleWrapper>
       <Container maxWidth="lg">
